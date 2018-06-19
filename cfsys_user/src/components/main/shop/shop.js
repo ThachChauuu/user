@@ -10,6 +10,7 @@ export default class Shop extends Component{
                 <Header/>
                 <View style={{alignItems: 'center', flex: 1}}>
                     <Text>Shop Component</Text>
+                    {/* navigation Routes (home, search, order-history, profile) in here */}
                 </View>
             </View>
         );
