@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import Main from '../components/main/main';
+import Main from './main/main';
 
 export default class AppUser extends Component{
     render(){
