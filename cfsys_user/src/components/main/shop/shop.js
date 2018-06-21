@@ -1,12 +1,52 @@
 import React, { Component } from 'react';
 import { } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { TabNavigator} from 'react-navigation';
+import { TabNavigator, createBottomTabNavigator, StackNavigator} from 'react-navigation';
 
 import Home from './home/home';
 import Search from './search/search';
 import OrderHistory from './order-history/order_history';
 import Profile from './profile/profile';
+import Detail from './detail/detail';
+import home from './images/home.png';
+
+
+const TabBar = createBottomTabNavigator(
+    {
+        Home: {
+            screen: Home
+        },
+        Search: {
+            screen: Search
+        },
+        OrderHistory: {
+            screen: OrderHistory
+        },
+        Profile: {
+            screen: Profile
+        }
+    }, 
+    {
+        initialRouteName: 'Home',
+        tabBarPosition: 'bottom',
+        headerMode: 'none',
+        tabBarOptions: {
+            activeTintColor: '#3396FF',
+            showLabel: false,
+            inactiveTintColor: '#e1e1d0'
+        },
+        swipeEnabled: false,
+    });
+  
+
+    const App = StackNavigator({
+        HomeTab: TabBar,
+        Detail: Detail,
+      },
+      {
+        headerMode: 'none',
+      });
+
 
 const Tabs = TabNavigator(
     {
@@ -62,7 +102,7 @@ const Tabs = TabNavigator(
 export default class Shop extends Component {
     render() {
         return (
-            <Tabs />
+            <App/>
         );
     }
 }
