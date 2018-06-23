@@ -10,9 +10,28 @@ import milkcoffee from '../images/milkcoffee.jpg';
 import { Alert, View, Text, ScrollView, StyleSheet, Button, Image, FlatList, TouchableHighlight, TouchableOpacity, Dimensions, TextInput } from 'react-native';
 
 const window = Dimensions.get('window')
+const starcolors = {
+    '1': '#FFE033',
+    '2': '#FFE033',
+    '3': '#FFE033',
+    '4': '#FFE033',
+    '0': '#FFE033',
+    '-1': '#E0DEC8',
+    '-2': '#E0DEC8',
+    '-3': '#E0DEC8',
+    '-4': '#E0DEC8',
+    '-5': '#E0DEC8',
+  }
+
 
 export default class DetailScreen extends React.Component {
-  
+    
+    rank = 3.2
+    roundrank = Math.round(this.rank)
+    title = "Coffee Shop 1"
+    address = "502/48/23 Cách Mạng Tháng 8, P. 13, Quận Tân Bình, TP.HCM"
+    _keyExtractor = (item, index) => item.id;
+
     render() {
       return (
         <View style={{flex: 1}}>
@@ -28,7 +47,7 @@ export default class DetailScreen extends React.Component {
             </TouchableOpacity>
           </View>
           <Text style={{justifyContent:'center', color: 'white', fontSize: 20, marginLeft: 10, fontWeight: 'bold'}}>
-            COFFEE SHOP 1
+            {this.title.toUpperCase()}
           </Text>
           <Image
               source={shoppingcart}
@@ -49,36 +68,36 @@ export default class DetailScreen extends React.Component {
             <View style = {{width: window.width, backgroundColor: 'rgba(52, 52, 52, 0.6)', marginTop: -76}}>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 2}}>
                     <Text style={{color: '#ff8566', fontWeight: 'bold', fontSize: 24, marginLeft: 10}}>
-                        Coffee Shop 1
+                        {this.title}
                     </Text>
                     <View style = {{flexDirection: 'row', marginRight: 10}}>
-                        <Image
-                        style = {{height: 30, width: 30, tintColor: '#FFE033'}}
-                        source={star}
-                        />
-                        <Image
-                        style = {{height: 30, width: 30, tintColor: '#FFE033'}}
-                        source={star}
-                        />
-                        <Image
-                        style = {{height: 30, width: 30, tintColor: '#FFE033'}}
-                        source={star}
-                        />
-                        <Image
-                        style = {{height: 30, width: 30, tintColor: '#FFE033'}}
-                        source={star}
-                        />
-                        <Image
-                        style = {{height: 30, width: 30, tintColor: '#FFE033'}}
-                        source={star}
-                        />
+                    <Image
+                            style = {{height: 30, width: 30, tintColor: starcolors[(this.roundrank-1).toString()] }}
+                            source={star}
+                            />
+                            <Image
+                            style = {{height: 30, width: 30, tintColor: starcolors[(this.roundrank-2).toString()]}}
+                            source={star}
+                            />
+                            <Image
+                            style = {{height: 30, width: 30, tintColor: starcolors[(this.roundrank-3).toString()]}}
+                            source={star}
+                            />
+                            <Image
+                            style = {{height: 30, width: 30, tintColor: starcolors[(this.roundrank-4).toString()]}}
+                            source={star}
+                            />
+                            <Image
+                            style = {{height: 30, width: 30, tintColor: starcolors[(this.roundrank-5).toString()]}}
+                            source={star}
+                            />
                     </View>
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 2}}>
                     <Text numberOfLines={2} style={{fontSize: 15, marginLeft: 10, color: 'white', width: window.width/2 + 10}}>
-                        502/48/23 Cách Mạng Tháng 8, P. 13, Quận Tân Bình, TP.HCM
+                        {this.address}
                     </Text>
-                    <Text style={{fontSize: 18, marginRight: 72, color: '#ff8566'}}>4.7/5</Text>
+                    <Text style={{fontSize: 18, marginRight: 72, color: '#ff8566'}}>{this.rank.toString() + "/5"}</Text>
                 </View> 
             </View>
             </View>
@@ -136,10 +155,11 @@ export default class DetailScreen extends React.Component {
                 <FlatList
                 justifyContent = "space-between"
                     data={[
-                    {image: icecoffee, title: 'Iced Coffee', price: '10.000d'},
-                    {image: milkcoffee, title: 'Milk Coffee', price: '12.000d'},
-                    {image: milkcoffee, title: 'Milk Coffee', price: '12.000d'},
+                    {id:'1', image: icecoffee, title: 'Iced Coffee', price: '10.000d'},
+                    {id:'2', image: milkcoffee, title: 'Milk Coffee', price: '12.000d'},
+                    {id:'3', image: milkcoffee, title: 'Milk Coffee', price: '12.000d'},
                     ]}
+                    keyExtractor = {this._keyExtractor}
                     renderItem={({item}) => 
                     <View style={{ flex:1, flexDirection: 'row', padding: 5, alignItems: 'center', justifyContent: 'space-between'}}>
                         <View style = {{flexDirection: 'row'}}>

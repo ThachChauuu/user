@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Alert, View, Text, ScrollView, StyleSheet, Button, Image, FlatList, TouchableHighlight, TouchableOpacity, Dimensions, TextInput } from 'react-native';
 
-import home from '../images/home.png';
+import history from '../images/history.png';
 
 export default class OrderHistory extends Component{
 
@@ -12,7 +12,7 @@ export default class OrderHistory extends Component{
         showLabel: false,
         tabBarIcon: ({ tintColor }) => (
           <Image
-            source={home}
+            source={history}
             style={[styles.tabicon, { tintColor: tintColor }]}
           />
         ),

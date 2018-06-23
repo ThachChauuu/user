@@ -1,21 +1,43 @@
 import React, { Component } from 'react';
-import { } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { TabNavigator, createBottomTabNavigator, StackNavigator} from 'react-navigation';
+import { TabNavigator, createBottomTabNavigator, StackNavigator, createStackNavigator} from 'react-navigation';
 
 import Home from './home/home';
 import Search from './search/search';
 import OrderHistory from './order-history/order_history';
 import Profile from './profile/profile';
 import Detail from './detail/detail';
+import MoreList from './more-list/more_list';
 import home from './images/home.png';
 
+// const FeedStack = createStackNavigator({
+//     Home: Home,
+//     Detail: Detail,
+//     MoreList: MoreList
+// },
+// {
+//     initialRouteName: 'Home'
+// /* any other route you want to render under the tab bar */
+// });
+
+// FeedStack.navigationOptions = {
+//     tabBarLabel: '',
+//     header: null,
+//     headerMode: 'none',
+//     showLabel: false,
+//     tabBarIcon: ({ tintColor }) => (
+//         <Image
+//         source={home}
+//         style={[styles.tabicon, { tintColor: tintColor }]}
+//         />
+//     ),
+    
+// };
 
 const TabBar = createBottomTabNavigator(
     {
-        Home: {
-            screen: Home
-        },
+        Home: Home,
         Search: {
             screen: Search
         },
@@ -27,7 +49,7 @@ const TabBar = createBottomTabNavigator(
         }
     }, 
     {
-        initialRouteName: 'Home',
+        //initialRouteName: 'Home',
         tabBarPosition: 'bottom',
         headerMode: 'none',
         tabBarOptions: {
@@ -42,62 +64,26 @@ const TabBar = createBottomTabNavigator(
     const App = StackNavigator({
         HomeTab: TabBar,
         Detail: Detail,
+        MoreList: MoreList,
       },
       {
         headerMode: 'none',
       });
 
-
-const Tabs = TabNavigator(
-    {
-        Home: {
-            screen: Home,
-        },
-        Search: {
-            screen: Search
-        },
-        OrderHistory: {
-            screen: OrderHistory
-        },
-        Profile: {
-            screen: Profile
-        }
-    },
-    {
-        initialRouteName: 'Home',
-        tabBarPosition: 'bottom',
-        tabBarOptions: {
-            showIcon: false,
-            showLabel: true,
-            activeTintColor: 'blue',
-            inactiveTintColor: 'white',
-            upperCaseLabel: false,
-            allowFontScaling: true,
-            labelStyle: {
-                fontSize: 12,
-                fontWeight: '600',
-            },
-        },
-        swipeEnabled: true,
-        navigationOptions: ({ navigation }) => ({
-            tabBarIcon: ({ focused, tintColor }) => {
-                const { routeName } = navigation.state;
-                let iconName;
-                if (routeName === 'Home') {
-                    iconName = `home${focused ? '' : '-outline'}`;
-                } else if (routeName === 'Search') {
-                    iconName = `search${focused ? '' : '-outline'}`;
-                } else if (routeName === 'OrderHistory') {
-                    iconName = `reorder${focused ? '' : '-outline'}`;
-                } else {
-                    iconName = `person${focused ? '' : '-outline'}`;
-                }
-                return <Ionicons name={iconName} size={25} color={tintColor} />;
-            }
-        }),
-    }
-
-);
+    // test//////////////////////////////////////////////////
+    
+    
+    // const TabNavigator = createBottomTabNavigator({
+    //     Feed: FeedStack,
+    //     Profile: ProfileScreen,
+    // });
+    
+    // const HomeStack = createStackNavigator({
+    //     Tabs: TabNavigator,
+    //     Details: DetailsScreen,
+    /* any other route you want to render above the tab bar */
+    // });
+    //test///////////////////////////////////////////////////////
 
 export default class Shop extends Component {
     render() {
@@ -106,3 +92,52 @@ export default class Shop extends Component {
         );
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#F5FCFF',
+    },
+    flatlistver: {
+      flex: 1,
+      padding: 10,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    flatlisthor: {
+      height: 200,
+      padding: 10,
+    },
+    welcome: {
+      fontSize: 20,
+      textAlign: 'center',
+      margin: 10,
+    },
+    instructions: {
+      textAlign: 'center',
+      color: '#333333',
+      marginBottom: 5,
+    },
+    icon: {
+      width: 40,
+      height: 40,
+    },
+    searchicon: {
+      width: 35,
+      height: 35,
+    },
+    tabicon: {
+      width: 26,
+      height: 26,
+    },
+    userphoto: {
+      width: 100,
+      height: 100,
+    },
+    star: {
+      width: 5,
+      height: 5,
+    }
+  });
