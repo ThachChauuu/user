@@ -52,7 +52,7 @@ export default class Profile extends Component{
             </View>
             <TouchableHighlight onPress={this._onPressButton} >
             
-            <View style={{flex: 1,flexDirection: 'row', alignItems: 'center', backgroundColor: '#3396FF'}}>
+            <View style={{flex: 1,flexDirection: 'row', alignItems: 'center', backgroundColor: '#6F4E37'}}>
               <Image
                 source={bell}
                 style={[styles.icon, { tintColor: 'white', marginLeft: 40, margin: 5 }]}
@@ -69,7 +69,7 @@ export default class Profile extends Component{
               <Text style={{ fontSize: 22}}>{"Điểm thưởng"}</Text>
             </View>
             
-            <View style={{flex: 1,flexDirection: 'row', alignItems: 'center', backgroundColor: '#3396FF'}}>
+            <View style={{flex: 1,flexDirection: 'row', alignItems: 'center', backgroundColor: '#6F4E37'}}>
               <Image
                 source={heart}
                 style={[styles.icon, { tintColor: 'white', marginLeft: 40, margin: 5 }]}
@@ -89,7 +89,7 @@ export default class Profile extends Component{
             <Text style={{ fontSize: 18, marginLeft: 80, margin: 5}}>{"Đơn hàng tại chỗ"}</Text>
             <Text style={{ fontSize: 18, marginLeft: 80, margin: 5}}>{"Đơn hàng mua sỉ"}</Text>
             
-            <View style={{flex: 1,flexDirection: 'row', alignItems: 'center', backgroundColor: '#3396FF'}}>
+            <View style={{flex: 1,flexDirection: 'row', alignItems: 'center', backgroundColor: '#6F4E37'}}>
               <Image
                 source={history}
                 style={[styles.icon, { tintColor: 'white', marginLeft: 40, margin: 5 }]}
@@ -105,7 +105,7 @@ export default class Profile extends Component{
               <Text style={{ fontSize: 22}}>{"Sổ địa chỉ"}</Text>
             </View>
             
-            <View style={{flex: 1,flexDirection: 'row', alignItems: 'center', backgroundColor: '#3396FF'}}>
+            <View style={{flex: 1,flexDirection: 'row', alignItems: 'center', backgroundColor: '#6F4E37'}}>
               <Image
                 source={comment}
                 style={[styles.icon, { tintColor: 'white', marginLeft: 40, margin: 5 }]}
@@ -121,7 +121,7 @@ export default class Profile extends Component{
               <Text style={{ fontSize: 22}}>{"Cài đặt ứng dụng"}</Text>
             </View>
             
-            <View style={{flexDirection: 'row', alignItems: 'center', backgroundColor: '#3396FF'}}>
+            <View style={{flexDirection: 'row', alignItems: 'center', backgroundColor: '#6F4E37'}}>
               <Image
                 source={question}
                 style={[styles.icon, { tintColor: 'white', marginLeft: 40, margin: 5 }]}
@@ -138,8 +138,8 @@ export default class Profile extends Component{
             </View>
             <Button
               buttonStyle= {{fontSize: 100, backgroundColor : 'red', tintColor: 'red', color: 'red'}}
-              //onPress={() => this.props.navigation.goBack()}
-              
+              color = '#E74C3C'
+              onPress={this._onPressButton}
               title="Đăng xuất"
             />
           </ScrollView>

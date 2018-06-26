@@ -24,19 +24,40 @@ const starcolors = {
     '-4': '#E0DEC8',
     '-5': '#E0DEC8',
   }
-  
+const popular_coffee = [
+    {id:1, title: 'Coffee Shop 1', address: '187 - 189 Vành Đai Trong, P. Bình Trị, Quận Gò Vấp',rank:4.8, minprice: 10000, maxprice: 50000},
+    {id:2, title: 'Coffee Shop 2', address: '1 Quang Trung, P. 11, Quận Gò Vấp',rank:4.2, minprice: 10000, maxprice: 50000},
+    {id:3, title: 'Coffee Shop 3', address: '24/2A Quang Trung, Quận Gò Vấp',rank:4.6, minprice: 10000, maxprice: 50000},
+    {id:4, title: 'Coffee Shop 4', address: '590/29 Cách Mạng Tháng 8, P.11, Quận Tân Bình',rank:3.8, minprice: 10000, maxprice: 50000},
+    ]
+const nearby_coffee = [
+    {id:5, title: 'Coffee Shop 5', address: 'A4 - A5 Đồng Nai, P. 15, Quận 10',rank:2.7, minprice: 10000, maxprice: 50000},
+    {id:6, title: 'Coffee Shop 6', address: '84 Nguyễn Du, P. Bến Nghé, Quận 1',rank:4.4, minprice: 10000, maxprice: 50000},
+    {id:7, title: 'Coffee Shop 7', address: '84 Huỳnh Văn Bánh, P. 15, Quận 5',rank:3.4, minprice: 10000, maxprice: 50000},
+    {id:8, title: 'Coffee Shop 8', address: '2B - 2CThi Sách, P. Bến Nghé, Quận 1',rank:2.5, minprice: 10000, maxprice: 50000},
+    ]
+  //const coffee_list = []
 
  export default class MoreList extends React.Component{
 
-    _keyExtractor = (item, index) => item.id;
+    _keyExtractor = (item, index) => index.toString();
     
     //title = "GẦN TÔI"
     
     render(){
+        const { navigation } = this.props;
+        const title = navigation.getParam('title', 'FAIL');
+        if(title == 'GẦN TÔI')
+        {
+            coffee_list = nearby_coffee
+        }
+        else{
+            coffee_list = popular_coffee
+        }
         return(
             <View style={{flex: 1}}>
                 {/* toolbar */}
-                <View style={{ flexDirection: 'row', backgroundColor: '#3396FF', height: 58, alignContent: 'center', alignItems: 'center', justifyContent: 'space-between'}}>
+                <View style={{ flexDirection: 'row', backgroundColor: '#6F4E37', height: 58, alignContent: 'center', alignItems: 'center', justifyContent: 'space-between'}}>
                     <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 5}}>
                     <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
                         <Image
@@ -46,7 +67,7 @@ const starcolors = {
                         </TouchableOpacity>
                     </View>
                     <Text style={{justifyContent:'center', color: 'white', fontSize: 20, marginLeft: 10, fontWeight: 'bold'}}>
-                        {this.props.title}
+                        {title}
                     </Text>
                     <View
                         style={{marginRight: 5, width: 35}}
@@ -54,53 +75,39 @@ const starcolors = {
                 </View>
 
                 {/* List coffee */}
-                <View>
+                <View style = {{backgroundColor: 'white'}}>
                 <FlatList
-                    data={[
-                        {id:1, title: 'Coffee 1', address: '34 Nghĩa Hòa',rank:5},
-                        {id:2, title: 'Coffee 2', address: '34 Nghĩa Hòa',rank:4},
-                        {id:3, title: 'Coffee 3', address: '34 Nghĩa Hòa',rank:3},
-                        {id:4, title: 'Coffee 4', address: '34 Nghĩa Hòa',rank:2},
-                        {id:5, title: 'Coffee 5', address: '34 Nghĩa Hòa',rank:1},
-                    ]}
-                    keyExtractor = {this._keyExtractor}
-                    renderItem={({item}) => 
-
-                    <View style={{ flex:1, flexDirection: 'row', padding: 10, alignItems: 'center'}}>
-                        <Image
-                        style = {{height: 130, width: 130, marginLeft: 10}}
-                        source={coffee}
-                        />
-                        <View style = {{flexDirection: 'column', marginLeft: 15}}>
-                            <Text style={{color: '#ff8566', fontWeight: 'bold', fontSize: 25}}>{item.title}</Text>
-                            <Text style={{fontSize: 15}}>{item.address}</Text>
-                            <View style={{width: 10, height: 10}}/>
-                            <View style = {{flexDirection: 'row'}}>
-                            <Image
-                                style = {{height: 30, width: 30, tintColor: starcolors[(Math.round(item.rank)-1).toString()] }}
-                                source={star}
-                                />
-                                <Image
-                                style = {{height: 30, width: 30, tintColor: starcolors[(Math.round(item.rank)-2).toString()]}}
-                                source={star}
-                                />
-                                <Image
-                                style = {{height: 30, width: 30, tintColor: starcolors[(Math.round(item.rank)-3).toString()]}}
-                                source={star}
-                                />
-                                <Image
-                                style = {{height: 30, width: 30, tintColor: starcolors[(Math.round(item.rank)-4).toString()]}}
-                                source={star}
-                                />
-                                <Image
-                                style = {{height: 30, width: 30, tintColor: starcolors[(Math.round(item.rank)-5).toString()]}}
-                                source={star}
-                                />
+                        showsVerticalScrollIndicator={false}
+                        data={coffee_list}
+                        keyExtractor = {this._keyExtractor}
+                        renderItem={({item}) => 
+                        <TouchableOpacity onPress = {() => this.props.navigation.navigate('Detail', {id: item.id})}>
+                        <View style = {{flexDirection: 'column'}}>
+                            <View style={{ flex:1, flexDirection: 'row',marginTop: 5, alignItems: 'center', width: dimension.width, backgroundColor: 'white'
+                            , justifyContent: 'space-between'}}>
+                                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                    <Image
+                                    style = {{height: 80, width: 80, marginLeft: 10, marginTop: 10}}
+                                    source={coffee}
+                                    />
+                                    <View style = {{flexDirection: 'column', marginLeft: 15, marginRight: 10}}>
+                                        <Text numberOfLines={1} style={{color: '#ff8566', fontWeight: 'bold', fontSize: 20, width: dimension.width/2}}>{item.title}</Text>
+                                        <Text numberOfLines={1} style={{fontSize: 15, width: dimension.width/2}}>{item.address}</Text>
+                                        <Text numberOfLines={1} style={{fontSize: 15, width: dimension.width/2}}>{"Giá từ " + (item.minprice/1000).toFixed(3) + " - " + (item.maxprice/1000).toFixed(3)
+                                            + " VND"}</Text>
+                                    </View>
+                                </View>
+                                <View style = {{flexDirection: 'column', alignItems: 'center', marginRight: 10}}>
+                                    <Text style={{fontSize: 18, color: '#7CD175', fontWeight: 'bold'}}>
+                                    {item.rank.toString() + "/5"}</Text>
+                                    <Text style={{fontSize: 15}}>{item.rank+" km"}</Text>
+                                </View>
                             </View>
+                            <View style = {{height: 0.5, backgroundColor: 'gray', marginTop: 10}}/>
                         </View>
-                    </View>
-                    }
-                />
+                        </TouchableOpacity>
+                        }
+                    />
                 </View>
 
                 

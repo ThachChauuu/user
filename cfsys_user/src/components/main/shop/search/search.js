@@ -23,7 +23,7 @@ export default class Search extends Component{
         return(
             <View style={{flex: 1}}>
               <View style = {{flexDirection: 'row'}}>
-                  <View style={{height: 58, justifyContent: 'center', alignItems: 'center', backgroundColor:'#3396FF', borderTopWidth: 1,
+                  <View style={{height: 58, justifyContent: 'center', alignItems: 'center', backgroundColor:'#6F4E37', borderTopWidth: 1,
                       borderBottomWidth: 1, paddingLeft: 10}}> 
                       <Image
                       source={search}
@@ -32,17 +32,17 @@ export default class Search extends Component{
                   </View>
                   <View style={{flex: 1, height: 60}}>
                       <SearchBar
-                      containerStyle={{backgroundColor:'#3396FF', borderWidth: 0, borderColor: '#3396FF'}}
-                      inputStyle={{color:'#3396FF', backgroundColor: 'white', borderColor: '#3396FF'}}
+                      containerStyle={{backgroundColor:'#6F4E37', borderWidth: 0, borderColor: '#6F4E37'}}
+                      inputStyle={{color:'#6F4E37', backgroundColor: 'white', borderColor: '#6F4E37'}}
                       //placeholderTextColor='#fff'
-                      showLoading = {true} 
+                      //showLoading = {true} 
                       //platform = "android"
                       //cancelIcon={{ type: 'font-awesome', name: 'search', size: 30 }}
                       //clearIcon
                       //icon = {{ color: '#3B6693', style: styles.icon, name: 'search' }}
                       //showLoadingIcon
-                      icon = {false}
-                      searchIcon={false}
+                      //icon = {false}
+                      //searchIcon={false}
                       noIcon
                       placeholder='Tìm kiếm...' />
                   </View>

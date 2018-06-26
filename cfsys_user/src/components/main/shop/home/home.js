@@ -25,11 +25,23 @@ const starcolors = {
     '-4': '#E0DEC8',
     '-5': '#E0DEC8',
   }
-  
+
+  const popular_coffee = [
+    {id:1, title: 'Coffee Shop 1', address: '187 - 189 Vành Đai Trong, P. Bình Trị, Quận Gò Vấp',rank:4.8, minprice: 10000, maxprice: 50000},
+    {id:2, title: 'Coffee Shop 2', address: '1 Quang Trung, P. 11, Quận Gò Vấp',rank:4.2, minprice: 10000, maxprice: 50000},
+    {id:3, title: 'Coffee Shop 3', address: '24/2A Quang Trung, Quận Gò Vấp',rank:4.6, minprice: 10000, maxprice: 50000},
+    {id:4, title: 'Coffee Shop 4', address: '590/29 Cách Mạng Tháng 8, P.11, Quận Tân Bình',rank:3.8, minprice: 10000, maxprice: 50000},
+    ]
+const nearby_coffee = [
+    {id:5, title: 'Coffee Shop 5', address: 'A4 - A5 Đồng Nai, P. 15, Quận 10',rank:2.7, minprice: 10000, maxprice: 50000},
+    {id:6, title: 'Coffee Shop 6', address: '84 Nguyễn Du, P. Bến Nghé, Quận 1',rank:4.4, minprice: 10000, maxprice: 50000},
+    {id:7, title: 'Coffee Shop 7', address: '84 Huỳnh Văn Bánh, P. 15, Quận 5',rank:3.4, minprice: 10000, maxprice: 50000},
+    {id:8, title: 'Coffee Shop 8', address: '2B - 2CThi Sách, P. Bến Nghé, Quận 1',rank:2.5, minprice: 10000, maxprice: 50000},
+    ]
 
  export default class Home extends React.Component{
 
-    _keyExtractor = (item, index) => item.id;
+    _keyExtractor = (item, index) => index.toString();
     _onPressButton() {
         return(
             <MoreList title="ahihi"/>
@@ -51,9 +63,8 @@ const starcolors = {
 
     render(){
         return(
-            <ScrollView style={{flex: 1}}>
-                {/* toolbar */}
-                <View style={{ flexDirection: 'row', backgroundColor: '#3396FF', height: 58, alignContent: 'center', alignItems: 'center', 
+            <View style = {{flex: 1}}>
+            <View style={{ flexDirection: 'row', backgroundColor: '#6F4E37', height: 58, alignContent: 'center', alignItems: 'center', 
                 justifyContent: 'space-between', width: dimension.width}}>
                     <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 10}}>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('Search')}>
@@ -70,14 +81,17 @@ const starcolors = {
                         source={shoppingcart}
                         style={[styles.icon, { tintColor: 'white', marginRight: 5 }]}
                         />
-                </View>
+            </View>
+            <ScrollView style={{flex: 1}} showsVerticalScrollIndicator = {false}>
+                {/* toolbar */}
+                
                 <View style = {{backgroundColor: 'white', margin: 10}}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#F7F9F9', padding: 5}}>
-                    <Text style={{color: '#3396FF', fontWeight: 'bold', fontSize: 20, margin: 5, alignItems: 'center'}}>Gần tôi</Text>
+                    <Text style={{color: '#6F4E37', fontWeight: 'bold', fontSize: 20, margin: 5, alignItems: 'center'}}>Gần tôi</Text>
                     <View style={{alignItems: 'center', margin: 5}}> 
                         <Button
                             fontSize = "20"
-                            color = "#3396FF"
+                            color = "#6F4E37"
                             onPress={() => this.props.navigation.navigate('MoreList', {title: "GẦN TÔI"})}
                             title="Thêm >"
                         />
@@ -87,20 +101,15 @@ const starcolors = {
                     <FlatList
                         horizontal = {true}
                         showsHorizontalScrollIndicator={false}
-                        data={[
-                        {id:1, title: 'Coffee 1', address: '34 Nghĩa Hòa',rank:5},
-                        {id:2, title: 'Coffee 2', address: '34 Nghĩa Hòa',rank:4.4},
-                        {id:3, title: 'Coffee 3', address: '34 Nghĩa Hòa',rank:3.4},
-                        {id:4, title: 'Coffee 4', address: '34 Nghĩa Hòa',rank:2.7},
-                        ]}
+                        data={nearby_coffee}
                         keyExtractor = {this._keyExtractor}
                         renderItem={({item}) => 
-                        <TouchableOpacity onPress = {() => this.props.navigation.navigate('Detail')}>
+                        <TouchableOpacity onPress = {() => this.props.navigation.navigate('Detail', {id: item.id})}>
                         <View style={{ flexDirection: 'row'}}>
                             <View style= {{flexDirection: 'column'}}>
                             <Image
                                 source={coffee}
-                                style={{height: 130, width: 200}}
+                                style={{height: 110, width: 180}}
                             />
                             <View style = {{flexDirection: 'row', marginTop: -30}}>
                                 <Image
@@ -124,12 +133,12 @@ const starcolors = {
                                 source={star}
                                 />
                             </View>
-                            <View style = {{flexDirection : 'row', alignItems: 'center', width: 200, justifyContent: 'space-between'}}>
-                                <View style = {{flexDirection : 'column'}}>
-                                    <Text style={{color: '#ff8566', fontWeight: 'bold', fontSize: 25, height: 30}}>{item.title}</Text>
-                                    <Text style={{height: 20}}>{item.address}</Text>
+                            <View style = {{width: 180, flexDirection : 'column'}}>
+                                <Text numberOfLines = {1} style={{color: '#ff8566', fontWeight: 'bold', fontSize: 23, height: 30}}>{item.title}</Text>
+                                <View style = {{flexDirection: 'row', justifyContent: 'space-between', width: 180}}>
+                                    <Text numberOfLines = {1} style={{height: 20, width: 120}}>{item.address}</Text>
+                                    <Text numberOfLines = {1} style={{marginRight: 5}}>{item.rank+" km"}</Text>
                                 </View>
-                                    <Text style={{fontSize: 15, marginRight: 5}}>{item.rank+" km"}</Text>
                             </View>
                             </View>
                             <View style={{width: 20}}/>
@@ -141,11 +150,11 @@ const starcolors = {
                 </View>
                 <View style = {{flex:1, backgroundColor: 'white', marginTop: 5, margin: 10}}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#F7F9F9', padding: 5}}>
-                    <Text style={{color: '#3396FF', fontWeight: 'bold', fontSize: 20, margin: 5, alignItems: 'center'}}>Phổ biến</Text>
+                    <Text style={{color: '#6F4E37', fontWeight: 'bold', fontSize: 20, margin: 5, alignItems: 'center'}}>Phổ biến</Text>
                     <View style={{alignItems: 'center', margin: 5}}> 
                         <Button
                             fontSize = "20"
-                            color = "#3396FF"
+                            color = "#6F4E37"
                             onPress={() => this.props.navigation.navigate('MoreList', {title: "PHỔ BIẾN"})}
                             title="Thêm >"
                         />
@@ -155,35 +164,38 @@ const starcolors = {
                     <View style={styles.flatlistver}>
                     <FlatList
                         showsVerticalScrollIndicator={false}
-                        data={[
-                            {id:1, title: 'Coffee 1', address: '34 Nghĩa Hòa',rank:5, minprice: 10000, maxprice: 50000},
-                            {id:2, title: 'Coffee 2', address: '34 Nghĩa Hòa',rank:4, minprice: 10000, maxprice: 50000},
-                            {id:3, title: 'Coffee 3', address: '34 Nghĩa Hòa',rank:3, minprice: 10000, maxprice: 50000},
-                            {id:4, title: 'Coffee 4', address: '34 Nghĩa Hòa',rank:2, minprice: 10000, maxprice: 50000},
-                        ]}
+                        data={popular_coffee}
                         keyExtractor = {this._keyExtractor}
                         renderItem={({item}) => 
+                        <TouchableOpacity onPress = {() => this.props.navigation.navigate('Detail', {id: item.id})}>
                         <View style = {{flexDirection: 'column'}}>
-                            <View style={{ flex:1, flexDirection: 'row',marginTop: 5, alignItems: 'center', width: dimension.width, backgroundColor: 'white'}}>
-                                <Image
-                                style = {{height: 70, width: 70, marginLeft: 10, marginTop: 10}}
-                                source={coffee}
-                                />
-                                <View style = {{flexDirection: 'column', marginLeft: 15}}>
-                                    <Text style={{color: '#ff8566', fontWeight: 'bold', fontSize: 25}}>{item.title}</Text>
-                                    <Text style={{fontSize: 15}}>{item.address}</Text>
-                                    <Text style={{fontSize: 15}}>{"Giá từ " + (item.minprice/1000).toFixed(3) + " - " + (item.maxprice/1000).toFixed(3)
-                                        + " VND"}</Text>
-                                    <View style={{width: 10, height: 10}}/>
+                            <View style={{ flex:1, flexDirection: 'row',marginTop: 5, alignItems: 'center', width: dimension.width, backgroundColor: 'white'
+                            , justifyContent: 'space-between', height: 90}}>
+                                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                    <Image
+                                    style = {{height: 80, width: 80, marginLeft: 10, marginTop: 10}}
+                                    source={coffee}
+                                    />
+                                    <View style = {{flexDirection: 'column', marginLeft: 15, width: 200}}>
+                                        <Text numberOfLines={1} style={{color: '#ff8566', fontWeight: 'bold', fontSize: 20}}>{item.title}</Text>
+                                        <Text numberOfLines={1} style={{fontSize: 15}}>{item.address}</Text>
+                                        <Text numberOfLines={1} style={{fontSize: 15}}>{"Giá từ " + (item.minprice/1000).toFixed(3) + " - " + (item.maxprice/1000).toFixed(3)
+                                            + " VND"}</Text>
+                                        <View style={{width: 10, height: 10}}/>
+                                    </View>
                                 </View>
+                                <Text style={{fontSize: 18, color: '#7CD175', fontWeight: 'bold', marginRight: 30}}>
+                                {item.rank.toString() + "/5"}</Text>
                             </View>
-                            <View style = {{height: 0.2, backgroundColor: 'gray', marginTop: 10}}/>
+                            <View style = {{height: 0.5, backgroundColor: 'gray', marginTop: 10}}/>
                         </View>
+                        </TouchableOpacity>
                         }
                     />
                     </View>
                 </View>
             </ScrollView>
+            </View>
         );
     }
 }
@@ -201,7 +213,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
     },
     flatlisthor: {
-      height: 200,
+      height: 180,
       padding: 10,
     },
     welcome: {

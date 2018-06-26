@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Image, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { TabNavigator, createBottomTabNavigator, StackNavigator, createStackNavigator} from 'react-navigation';
+import SplashScreen from 'react-native-splash-screen'
 
 import Home from './home/home';
 import Search from './search/search';
@@ -53,7 +54,7 @@ const TabBar = createBottomTabNavigator(
         tabBarPosition: 'bottom',
         headerMode: 'none',
         tabBarOptions: {
-            activeTintColor: '#3396FF',
+            activeTintColor: '#6F4E37',
             showLabel: false,
             inactiveTintColor: '#e1e1d0'
         },
@@ -86,6 +87,9 @@ const TabBar = createBottomTabNavigator(
     //test///////////////////////////////////////////////////////
 
 export default class Shop extends Component {
+    componentDidMount() {
+      SplashScreen.hide();
+  }
     render() {
         return (
             <App/>
