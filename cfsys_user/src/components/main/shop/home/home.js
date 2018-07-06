@@ -83,7 +83,6 @@ const nearby_coffee = [
                         />
             </View>
             <ScrollView style={{flex: 1}} showsVerticalScrollIndicator = {false}>
-                {/* toolbar */}
                 
                 <View style = {{backgroundColor: 'white', margin: 10}}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#F7F9F9', padding: 5}}>

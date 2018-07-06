@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Image, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { TabNavigator, createBottomTabNavigator, StackNavigator, createStackNavigator} from 'react-navigation';
+import { TabNavigator, createBottomTabNavigator, StackNavigator, createStackNavigator, createSwitchNavigator} from 'react-navigation';
 import SplashScreen from 'react-native-splash-screen'
 
 import Home from './home/home';
@@ -11,6 +11,7 @@ import Profile from './profile/profile';
 import Detail from './detail/detail';
 import MoreList from './more-list/more_list';
 import home from './images/home.png';
+import Login from './login/login';
 
 // const FeedStack = createStackNavigator({
 //     Home: Home,
@@ -71,6 +72,15 @@ const TabBar = createBottomTabNavigator(
         headerMode: 'none',
       });
 
+    const UserLogin = createSwitchNavigator({
+      Main: App,
+      LoginScreen: Login,
+    },
+    {
+      initialRouteName: 'LoginScreen',
+      headerMode: 'none',
+    })
+
     // test//////////////////////////////////////////////////
     
     
@@ -92,7 +102,7 @@ export default class Shop extends Component {
   }
     render() {
         return (
-            <App/>
+            <UserLogin/>
         );
     }
 }
