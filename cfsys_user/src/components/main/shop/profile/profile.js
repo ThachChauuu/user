@@ -139,7 +139,7 @@ export default class Profile extends Component{
             <Button
               buttonStyle= {{fontSize: 100, backgroundColor : 'red', tintColor: 'red', color: 'red'}}
               color = '#E74C3C'
-              onPress={this._onPressButton}
+              onPress={() => this.props.navigation.navigate('LoginScreen')}
               title="Đăng xuất"
             />
           </ScrollView>
