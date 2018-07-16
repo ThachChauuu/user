@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from '../images/logo.png';
 import background from '../images/background.png';
 import { Alert, View, Text, ScrollView, StyleSheet, Button, Image, FlatList, 
-  TouchableHighlight, TouchableOpacity, Dimensions, TextInput, ImageBackground, ActivityIndicator } from 'react-native';
+  TouchableHighlight, TouchableOpacity, Dimensions, TextInput, ImageBackground, ActivityIndicator, Modal, NetInfo } from 'react-native';
 
 const window = Dimensions.get('window')
 
@@ -15,45 +15,54 @@ export default class LoginScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {text: ''};
-    this.state = {isLoading: true};
+    this.state = {isShow: true};
+    this.state = {loginData: null};
+    this.state = {success: false};
   }
 
-  componentDidMount(){
-    return fetch('https://distance-latlong.herokuapp.com/lat1=34&long1=57&lat2=34&long2=23')
+  _onLogin(username,password) {
+    this.setState({isShow: true})
+    this.setState({loginData: null})
+    NetInfo.isConnected.fetch().then(isConnected => {
+      if(isConnected){
+        return fetch('https://distance-latlong.herokuapp.com/lat1=34&long1=57&lat2=34&long2=23')
       .then((response) => response.json())
       .then((responseJson) => {
 
         this.setState({
-          isLoading: false,
+          isShow: false,
           loginData: responseJson,
         }, function(){
-
+          if(this.state.loginData!=null){
+            if(username == this.state.loginData.lat1 && password == this.state.loginData.long1){
+              this.props.navigation.navigate('Main')
+            }
+            else{
+              this.setState({isShow:false})
+              Alert.alert("Nhập sai tên hoặc password")
+            }
+          }
         });
 
       })
       .catch((error) =>{
-        console.error(error);
+        this.setState({isShow: false})
+        Alert.alert("Lỗi mạng hoặc không thể lấy dữ liệu")
       });
-  }
-
-  showAlert = (message) => {
-    Alert.alert(message)
-  }
-
-  _onLogin(username,password) {
-    if(this.state.isLoading){
-      return(
-        <View style={{flex: 1, padding: 20}}>
-          <ActivityIndicator/>
-        </View>
-      )
-    }
-    if(username == this.state.loginData.lat1 && password == this.state.loginData.long1){
-      this.props.navigation.navigate('Main')
-    }
-    else{
-      this.showAlert("Nhập sai tên hoặc password")
-    }
+      }
+      else{
+        this.setState({isShow: false})
+        Alert.alert(
+          'Lỗi',
+          'Lỗi mạng hoặc không thể lấy dữ liệu',
+          [
+            {text: 'OK'},
+          ],
+          { cancelable: false }
+        )
+      }
+    });
+    
   }
 
   static navigationOptions = {
@@ -68,6 +77,23 @@ export default class LoginScreen extends React.Component {
 
       return (
         <ImageBackground source = {background} style = {{flex:1, alignItems: 'center'}}>
+          {this.state.isShow &&
+            <Modal
+              transparent={true}
+              animationType={'none'}
+              visible={this.state.isShow}
+              onRequestClose = {() => this.setState({isShow:false})}>
+              <View style={styles.modalBackground}>
+                <View style={styles.activityIndicatorWrapper}>
+                  <ActivityIndicator
+                    animating = {this.state.isShow}
+                    color = '#6F4E37'
+                    size = {100}/>
+                    <Text style = {{fontSize:20, fontWeight: 'bold'}}>Đang lấy dữ liệu</Text>
+                </View>
+              </View>
+            </Modal>
+          }
           <Image
             source = {logo}
             style = {{width: window.width/2, height: window.width/3, marginTop: 50}}
@@ -156,5 +182,31 @@ const styles = StyleSheet.create({
       width: null,
       height: null,
       resizeMode: 'cover'
+  },
+  loading: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#F5FCFF88'
+  },
+  modalBackground: {
+    flex: 1,
+    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    backgroundColor: '#00000040'
+  },
+  activityIndicatorWrapper: {
+    backgroundColor: '#FFFFFF',
+    height: 200,
+    width: 200,
+    borderRadius: 10,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-around'
   }
   });
