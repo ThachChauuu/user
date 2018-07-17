@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { Alert, View, Text, ScrollView, StyleSheet, Button, Image, FlatList, TouchableHighlight, TouchableOpacity, Dimensions, TextInput } from 'react-native';
+import { Alert, View, Text, ScrollView, StyleSheet, Button, Image, FlatList, 
+  TouchableHighlight, TouchableOpacity, Dimensions, TextInput, Modal, ActivityIndicator } from 'react-native';
 
 import search from '../images/search.png';
 import coffee from '../images/coffee.jpg';
 import { SearchBar } from 'react-native-elements';
+import filter from '../images/filter.png';
 
 const coffee_list = [
   {id:1, title: 'Coffee Shop 1', address: '187 - 189 Vành Đai Trong, P. Bình Trị, Quận Gò Vấp',rank:4.8, minprice: 10000, maxprice: 50000, menu: drinks},
@@ -39,11 +41,12 @@ const drinks = [
 
 export default class Search extends Component{
 
+  _keyExtractor = (item, index) => index.toString();
   constructor(props) {
     super(props);
     this.state = {text: ''};
     this.state = {isShow: false};
-    this.state = {list: popular_coffee};
+    this.state = {list: []};
   }
 
     static navigationOptions = {
@@ -61,7 +64,7 @@ export default class Search extends Component{
 
     onSearch(keyword){
       if(keyword.length == 0){
-        this.setState({list:popular_coffee})
+        this.setState({list:[]})
       }
       else{
         var array = []
@@ -74,10 +77,28 @@ export default class Search extends Component{
       }
     }
 
+    onSort(){
+      this.setState({isShow:true})
+    }
+
     render(){
         return(
             <View style={{flex: 1}}>
-              <View style = {{flexDirection: 'row'}}>
+            {this.state.isShow &&
+              <Modal
+                transparent={true}
+                animationType={'none'}
+                visible={this.state.isShow}
+                onRequestClose = {() => this.setState({isShow:false})}>
+                <View style={styles.modalBackground}>
+                  <View style = {styles.sortDialog}>
+                    <Text>VKL</Text>
+                    <Button/>
+                  </View>
+                </View>
+              </Modal>
+            }
+              <View style = {{height:58,flexDirection: 'row',backgroundColor:'#6F4E37'}}>
                   <View style={{height: 58, justifyContent: 'center', alignItems: 'center', backgroundColor:'#6F4E37', borderTopWidth: 1,
                       borderBottomWidth: 1, paddingLeft: 10}}> 
                       <Image
@@ -94,6 +115,18 @@ export default class Search extends Component{
                       placeholder='Tìm kiếm...' />
                   </View>
                 </View>
+                <View style = {{flexDirection : 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'rgba(52, 52, 52, 0.6)', padding: 8}}>
+                  <TouchableOpacity onPress = {() => this.onSort()}>
+                    <Text style = {{fontSize: 17, color: 'white'}}>Sort by popularity</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress = {() => this.onSort()}>
+                    <View style = {{flexDirection: 'row', alignItems: 'center'}}>
+                      <Image source={filter} style={{ tintColor: 'white' , height: 17, width: 17}}/>
+                      <Text style = {{fontSize: 17, color: 'white'}}>Filter</Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+                <View style = {{width: dimension.width, height: 0.7, backgroundColor: 'black'}}/>
                 {
                   <View style = {{backgroundColor: 'white'}}>
                     <FlatList
@@ -123,7 +156,7 @@ export default class Search extends Component{
                                   <Text style={{fontSize: 15}}>{item.rank+" km"}</Text>
                               </View>
                           </View>
-                          <View style = {{height: 0.5, backgroundColor: 'gray', marginTop: 10}}/>
+                          <View style = {{height: 0.7, backgroundColor: 'gray', marginTop: 10}}/>
                       </View>
                       </TouchableOpacity>
                       }
@@ -182,5 +215,21 @@ const styles = StyleSheet.create({
     star: {
       width: 5,
       height: 5,
+    },
+    modalBackground: {
+      flex: 1,
+      alignItems: 'center',
+      flexDirection: 'column',
+      justifyContent: 'space-around',
+      backgroundColor: '#00000040'
+    },
+    sortDialog: {
+      backgroundColor: '#FFFFFF',
+      height: dimension.height*2/3,
+      width: dimension.width*2/3,
+      borderRadius: 10,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-around'
     }
   });
